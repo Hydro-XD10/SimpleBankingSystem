@@ -1,13 +1,16 @@
-class Utility:
-    
-    
-    
-    def Check_username_availability(Username):
-        for account in data.Accounts:
-            if account["Username"] == Username:
+class Utility:    
+    def Check_username_valid(Username):
+        for i in Username:
+            if i == " ":
                 return False
-        return True
             
+        return True
+        
+    
+    def check_if_input_is_numbers(INPUT): # to check any input if its numbers or not. this is for inputs that requires numbers
+        list_of_numbers=[1,2,3,4,5,6,7,8,9,0]
+        for i in INPUT:
+            if i :
     
     
     
@@ -37,33 +40,31 @@ class data:
     
     Accounts =[ 
         {
-            "Username": "Abdulmalik",
+            "Username": "Abdulmalik", #
             "Password": 12345678,
             "Balance": "0",
             "Balance_sign": True,#True is positve false is negative
-            "Overdraft_Allowance": 1500
+            "Overdraft_Allowance": 1500,
+            "is_locked_out":False # is the account locked out or not
         },
         {
             "Username": "Sam112233",
             "Password": 123456789,
             "Balance": "0",
             "Balance_sign": True,#True is positve false is negative
-            "Overdraft_Allowance": 1500
+            "Overdraft_Allowance": 1500,
+            "is_locked_out":False# is the account locked out or not
         },
         {
             "Username": "mono133",
             "Password": "1q2w3e4r5t",
             "Balance": "0",
             "Balance_sign": True,#True is positve false is negative
-            "Overdraft_Allowance": 1500
+            "Overdraft_Allowance": 1500,
+            "is_locked_out":False# is the account locked out or not
         }
         ]
     
-
-
-
-
-
 
 
 
