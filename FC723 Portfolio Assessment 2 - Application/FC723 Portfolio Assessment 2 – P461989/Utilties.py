@@ -1,4 +1,32 @@
-class Utility:    
+class Utility:  
+    
+    def is_balance_sufficient(account,amount_of_money):# function that checks if the user got enough balance
+        balance=Utility.twos_complement_to_decimal(account["Balance"])
+
+        #if account["Balance_sign"] ==False: # means that the balance is negative
+         #   return False# that means not is_balance_sufficient
+        
+        if balance >= amount_of_money: 
+            return True
+        if balance < amount_of_money:
+            return False
+        
+                
+            
+        
+    def twos_complement_to_decimal(binarynum):# function that convert from 2'complemnts to decimal
+        bits = len(binarynum)# check how many bits in the binarynum
+        value = int(binarynum, 2)  #convert from binary to integer
+        if binarynum[0] == '1':  #if the sign bit is 1, its negative
+            value -= (1 << bits)  #convert again using two complement formula
+        return value
+    
+    def dec_to_2complemnt(n, bits=32):
+        if n < 0:
+            n = (1 << bits) + n  # Compute two's complement for negative numbers
+        return format(n, f'0{bits}b')  # Format as binary with leading zeros
+    
+    
     def Check_username_valid(Username):# check if username valid 
         if Username == "": # check if the input is embty
             print("You have to write username\n")# instructing message
@@ -11,15 +39,10 @@ class Utility:
         return True # after checking all the condtions return true
     
 
-    def is_input_float(INPUT): # to check any string input if its float or int. this is for inputs that requires numbers
-        lis=["1","2","3","4","5","6","7","8","9","0","."] # list of numbers and dot. this used to check if they values in the input if yes that means they are float
-        dotsCounter=0 # count how dots   
+    def is_input_intger_number(INPUT): # to check any string input if its float or int. this is for inputs that requires numbers
+        lis=["1","2","3","4","5","6","7","8","9","0"] # list of numbers and dot. this used to check if they values in the input if yes that means they are float
         
         for i in INPUT:# loop through characters 
-            if dotsCounter==2: # check if the dots counter already 2
-                return False #if dots counter is 2 means not valid input
-            if i == ".":# if the character is dot
-                dotsCounter+=1 # increase the dots counter
             if i not in lis:# if the character is not in the list
                 return False# reuturn false because its means that it could be letters
     
@@ -43,12 +66,7 @@ class Utility:
         else: # did not passed the valid password test
             return False
         
-    def twos_complement_to_decimal(binary_str):
-        return int(binary_str, 2)
 
-    def dec_to_2complemnt(number): 
-        output=bin(number)
-        return(output[2:])
     
 class data:
     
@@ -82,7 +100,6 @@ class data:
         }
         ]
     
-
 
 
 
