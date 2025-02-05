@@ -4,11 +4,11 @@ class Banking_app:
         self.Accounts=Accounts
 
 
-#========================================================================================================     Intial Menu code   =====================================================================================================
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\    Intial Menu code    /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\   
 
 
     def initial_Menu(self):# the first menu appear to ask for log on or sign in
-        option=input("Enter service number\n\n1- for Sign in\n===========\n2- for log in\n===========\n3- Exit\n")# this is the menu
+        option=input("Enter service number\n\n1- for Sign in\n===========\n2- for log in\n===========\n3- Exit App\n")# this is the menu
         if option =="3":
             return
         
@@ -37,19 +37,26 @@ class Banking_app:
 
 
 
-#=========================================================================================================  Intial Menu code end  ===================================================================================================================
+#\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/ The end of Intial Menu code  \_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/
 
 
 
 
 
 
-#=====================================================================================================     The app main interface code   =====================================================================================================
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\     The app main interface code   /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
     def App_main_interface(self,Username):
-        option=input("\nPlease Enter the service number\n1-Withdrawl\n===========\n2-Deposit\n===========\n3-Display Balance\n===========\n4-Transfer money\n===========\n5-Exit account\n")
+        option=input("Please Enter the service number\n1-Withdrawl\n===========\n2-Deposit\n===========\n3-Display Balance\n===========\n4-Transfer money\n===========\n5-Exit App\n===========\n6-Log out\n")
+        if option == "5":
+            return
+        if option =="6":
+            self.initial_Menu()
+        
         if option =="3":
             self.Display_balance(Username)
         
+        if option == "2":
+            self.Deposit(Username)
 
 
     def add_New_accounts_to_data(self,Username,Password,money_deposited,Money_Float_Amount):# this function is to add a new account to the data
@@ -67,7 +74,19 @@ class Banking_app:
             if account["Username"] == Username: #check if name exist
                 return False# if yes return flase
         return True # if the username availible return true
+        
 
+
+    
+
+
+#\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/     the end of main interface code   \_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/
+
+
+
+
+
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\     display function   /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
 
 
     def Display_balance(self,Username):# to display the balance
@@ -77,36 +96,37 @@ class Banking_app:
                 decbalance=Ut.Utility.twos_complement_to_decimal(balanceinbinary)#convert the balance in binary to decimal
                 flt=account["floats_amount"] # get the float amount stored in the account because its part of the balance 
                 displayamount=flt+decbalance #add the float and balance together
-                print(f"You Balance is:\n{displayamount}")# display the balance
-                print(self.Accounts)
+                print(f"You Balance is:\n{displayamount}\n====================")# display the balance
+                self.App_main_interface(Username)# run the interface again
 
-
-##=====================================================================================================     The app main interface the end of the code   =====================================================================================================
-
-
+#\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/     The end of display function code   \_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/
 
 
 
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\     Deposit function   /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def Deposit(self,Username):
+        inn=input("Enter a amount of money ")
+        while Ut.Utility.is_input_float(inn) == False:
+            print("Please make sure you enter a valid number ")
+            inn=input("Enter a amount of money ")
+            
+            
+        floatmoneydeposit=float(inn)
+        depositamount= int(floatmoneydeposit)
+        
+        for account in self.Accounts:
+            if Username == account["Username"]:
+                balance_in_binary=account["Balance"]
+                balance_dec=Ut.Utility.twos_complement_to_decimal(balance_in_binary)
+                final_amount=balance_dec+depositamount
+                newbalance=Ut.Utility.dec_to_2complemnt(final_amount)
+                account["Balance"]=newbalance
+                self.App_main_interface(Username)# run the interface again
+                
+                
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\     The Deposit function code   /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
 
 
     
