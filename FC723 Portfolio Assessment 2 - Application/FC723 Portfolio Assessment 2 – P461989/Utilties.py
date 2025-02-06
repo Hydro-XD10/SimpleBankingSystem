@@ -1,15 +1,12 @@
 class Utility:  
     
     def is_balance_sufficient(account,amount_of_money):# function that checks if the user got enough balance
-        balance=Utility.twos_complement_to_decimal(account["Balance"])
-
-        #if account["Balance_sign"] ==False: # means that the balance is negative
-         #   return False# that means not is_balance_sufficient
+        balance=Utility.twos_complement_to_decimal(account["Balance"])#get the balance in decimal
         
-        if balance >= amount_of_money: 
-            return True
-        if balance < amount_of_money:
-            return False
+        if balance >= amount_of_money: # if balance greater that the amount of money wanted to withdrawl or transfer
+            return True#return true which means enough money is in the account
+        if balance < amount_of_money:# if there is less money in the balance than the amount wanted to withdrawl or transfer
+            return False#will return false which  means there is no enough money in the balance
         
                 
             
