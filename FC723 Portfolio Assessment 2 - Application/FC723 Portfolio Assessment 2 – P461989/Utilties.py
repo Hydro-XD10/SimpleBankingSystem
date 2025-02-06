@@ -28,6 +28,7 @@ class Utility:
     
     
     def Check_username_valid(Username):# check if username valid 
+
         if Username == "": # check if the input is embty
             print("You have to write username\n")# instructing message
             return False # meanns not availible
@@ -73,8 +74,8 @@ class data:
     Accounts =[ 
         {
             "Username": "Abdulmalik", #  unique username 
-            "Password": 12345678,# normal password must be between 8 to 16 characters
-            "Balance": "0",# balance in binary
+            "Password": "12345678",# normal password must be between 8 to 16 characters
+            "Balance": "00000000000000000000010100010100",# balance in binary
             "Balance_sign": True,#True is positve false is negative
             "Overdraft_Allowance": 1500,    
             "is_locked_out":False, # is the account locked out or not
@@ -82,7 +83,7 @@ class data:
         },
         {
             "Username": "Sam112233",
-            "Password": 123456789,
+            "Password": "123456789",
             "Balance": "0",
             "Balance_sign": True,#True is positve false is negative
             "Overdraft_Allowance": 1500,
@@ -101,6 +102,6 @@ class data:
         ]
     
 
-
-
+a=Utility.dec_to_2complemnt(1300)
+print(a)
 

@@ -11,11 +11,32 @@ class Banking_app:
         option=input("Enter service number\n\n1- for Sign in\n===========\n2- for log in\n===========\n3- Exit App\n")# this is the menu
         if option =="3":
             return
-        
+        if option =="2":
+            
+            
+            
+            Username=input("To go back write Back\nEnter Username: ")
+            while self.Check_username_availability(Username)==True or Ut.Utility.Check_username_valid(Username)==False:
+               Username=input("The Username is wrong or not valid\nEnter Username again: ") 
+            Password=input("Enter Password: ")
+            while Ut.Utility.Check_if_password_valid(Password)==False or self.Password_Checker(Username, Password)==False:
+                Password=input("Password is not valid enter password again or not correct:\n ")
+                
+                
+                
+                
+            
+            for i in self.Accounts:
+                if i["Username"]==Username and i["Password"]==Password:
+                    self.App_main_interface(Username)
+            
+            
+            
+            
         if option =="1":
              New_Username=input("Create New Username:\n ")
              while self.Check_username_availability(New_Username)== False or Ut.Utility.Check_username_valid(New_Username)==False:
-                 #print("\nUsername is not availbile or contain space\s. Write new one")
+                 print("\nUsername is not availbile or contain space\s. Write new one")
                  New_Username=input("Create New Username:\n  ")
                  
              New_password=input("Create a password:\n ")
@@ -57,7 +78,8 @@ class Banking_app:
             
         if option == "1":
             self.Withdrawl(Username)
-
+        if option =="4":
+            self.Transfer(Username)
 
     def add_New_accounts_to_data(self,Username,Password,money_deposited):# this function is to add a new account to the data
         template={"Username": Username, "Password": Password,"Balance": "0","Balance_sign": True,"Overdraft_Allowance": 1500,"is_locked_out":False,"floats_amount": 0.0}# this is template to fill the data for the new account. this will be added to the accounts lists
@@ -75,7 +97,13 @@ class Banking_app:
         return True # if the username availible return true
         
 
-
+    def Password_Checker(self,Username,Password):
+        for i in self.Accounts:
+            if i["Username"]==Username:
+                if i["Password"]==Password:
+                    return True
+        return False
+                
     
 
 
@@ -169,6 +197,7 @@ class Banking_app:
                     i["Balance"]=Ut.Utility.dec_to_2complemnt(balance)# set 
                     print(f"withdrawal of {amount} GBP have been successful")
                     self.App_main_interface(Username)
+                
                 if Ut.Utility.is_balance_sufficient(i, amount)== False:
                     print("insufficient balance")
                     
@@ -211,11 +240,39 @@ class Banking_app:
                                self.App_main_interface(Username)
                         
                         
+#/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\    Transfer function   /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
 
+    def Transfer(self,Username):
+        
+                
+            
+        
 
+        receiver=input("Enter the Username of the receiver ")
+        while self.Check_username_availability(receiver)== True:
+            receiver=input("Username of the receiver is not Correct\nEnter the name again ")
+        
+        amount=input("The amount of money ")
+        while Ut.Utility.is_input_intger_number(amount)== False:
+            amount=input("Please Enter the amount in numbers ")
+        amount=int(amount)
+        
+        for rec in self.Accounts:   
+            if rec["Username"]==receiver:
+                balance=rec["Balance"]
+                balance=Ut.Utility.twos_complement_to_decimal(balance)
+                balance=balance+amount
+                rec["Balance"]=Ut.Utility.dec_to_2complemnt(balance)
 
-
-
+        
+        for Useraccount in self.Accounts:
+            if Useraccount["Username"]==Username:
+                balance=Useraccount["Balance"]
+                balance=Ut.Utility.twos_complement_to_decimal(balance)
+                balance-=amount
+                Useraccount["Balance"]=Ut.Utility.dec_to_2complemnt(balance)
+                print(f"===============\n{amount} GBP Transfer from your account to {receiver} have been successful\n===============")
+                self.App_main_interface(Username)
 
 
 
