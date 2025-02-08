@@ -73,28 +73,28 @@ class data:
             "Username": "Abdulmalik", #  unique username 
             "Password": "12345678",# normal password must be between 8 to 16 characters
             "Balance": "00000000000000000000010100010100",# balance in binary
-            "Balance_sign": True,#True is positve false is negative
+            
             "Overdraft_Allowance": 1500,    
             "is_locked_out":False, # is the account locked out or not
-            "floats_amount": 0.0 # the change of money like 0.50
+            
         },
         {
             "Username": "Sam112233",
             "Password": "123456789",
             "Balance": "0",
-            "Balance_sign": True,#True is positve false is negative
+            
             "Overdraft_Allowance": 1500,
             "is_locked_out":False,# is the account locked out or not
-            "floats_amount": 0.0      
+                 
         },
         {
             "Username": "mono133",
             "Password": "1q2w3e4r5t",
             "Balance": "0",
-            "Balance_sign": True,#True is positve false is negative
+            
             "Overdraft_Allowance": 1500,
             "is_locked_out":False,# is the account locked out or not
-            "floats_amount": 0.0
+            
         }
         ]
     

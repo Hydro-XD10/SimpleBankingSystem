@@ -121,7 +121,7 @@ class Banking_app:
 
 
     def add_New_accounts_to_data(self,Username,Password,money_deposited):# this function is to add a new account to the data
-        template={"Username": Username, "Password": Password,"Balance": "0","Balance_sign": True,"Overdraft_Allowance": 1500,"is_locked_out":False,"floats_amount": 0.0}# this is template to fill the data for the new account. this will be added to the accounts lists
+        template={"Username": Username, "Password": Password,"Balance": "0","Overdraft_Allowance": 1500,"is_locked_out":False}# this is template to fill the data for the new account. this will be added to the accounts lists
         balance=Ut.Utility.twos_complement_to_decimal(template["Balance"])# to convert the balance from binary to decimal
         new_balance=balance+money_deposited #after prompt the user to deposit money this line to add the deposited money to the balance
         finalbalance=Ut.Utility.dec_to_2complemnt(new_balance) # convert the final balance to binary
@@ -146,12 +146,12 @@ class Banking_app:
         return True # if the username availible return true
         
 
-    def Password_Checker(self,Username,Password):
-        for i in self.Accounts:
-            if i["Username"]==Username:
-                if i["Password"]==Password:
-                    return True
-        return False
+    def Password_Checker(self,Username,Password):#this function checks if the password and username are for the same account
+        for i in self.Accounts:#loop through accounts
+            if i["Username"]==Username:# check if usernames are the same
+                if i["Password"]==Password:# check password for the same account match
+                    return True # if the password and the username for the same account match the function will return true
+        return False # otherwise it will return false
 #\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/     the end of Utilities function code code   \_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/
 
 
