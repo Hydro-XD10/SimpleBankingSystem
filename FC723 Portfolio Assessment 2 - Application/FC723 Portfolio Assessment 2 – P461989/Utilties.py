@@ -20,21 +20,21 @@ class Utility:
     
     def dec_to_2complemnt(n, bits=32):
         if n < 0:
-            n = (1 << bits) + n  # Compute two's complement for negative numbers
-        return format(n, f'0{bits}b')  # Format as binary with leading zeros
+            n = (1 << bits) + n#Compute two's complement for negative numbers
+        return format(n, f'0{bits}b')# Format as binary with leading zeros
     
     
     def Check_username_valid(Username):# check if username valid 
 
         if Username == "": # check if the input is embty
             print("You have to write username\n")# instructing message
-            return False # meanns not availible
+            return False # meanns not valid
         for i in Username: # loop through username characters
             if i == " ": #check if there is a space
                 print("Username must not contain space/s\n")# instucting message 
-                return False # Thats means username not availible
+                return False # Thats means username not valid
             
-        return True # after checking all the condtions return true
+        return True # after checking all the condtions return true means no condtion achieved
     
 
     def is_input_intger_number(INPUT): # to check any string input if its float or int. this is for inputs that requires numbers
