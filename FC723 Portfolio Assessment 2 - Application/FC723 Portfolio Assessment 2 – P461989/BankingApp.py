@@ -8,9 +8,9 @@ class Banking_app:
 
 
     def initial_Menu(self):# the first menu appear to ask for log on or sign in
-        option=input("Enter service number\n\n1- for Sign in\n===========\n2- for log in\n===========\n3- Exit App\n")# this is the menu
-        if option =="3":
-            return# if option is 3 which is close the app
+        option=input("Enter service number\n\n1- for Sign in\n===========\n2- for log in\n===========\nEnter- Exit App\n")# this is the menu
+        if option ==" ":
+            return# if option is space which is close the app
        
         if option =="2":# to log into existing account
             
@@ -19,33 +19,49 @@ class Banking_app:
             Username=input("To go back Enter space\nEnter Username: ")#take user name for log in
             if Username==" ":# to go back
                 return self.initial_Menu()# to go back
-            while self.Check_username_availability(Username)==True or Ut.Utility.Check_username_valid(Username)==False:#check if the name exist and if the input is valid
-               Username=input("To go back Enter space\nThe Username is wrong or not valid\nEnter Username again: ")# if not input valid or the username is does not exist it will keep taking input
+            while self.Check_username_availability(Username)==True:#check if the name exist and if the input is valid
+               Username=input("\nTo go back Enter space\nThe Username is wrong: ")# if not input valid or the username is does not exist it will keep taking input
                if Username==" ":#to go back
                    self.initial_Menu()#to go back
             if self.Is_account_locked(Username)==True:#after taking the username we want to check if its locked out first
                 print("This account is locked contact the bank")# instructing message
                 self.initial_Menu()# get it back to the sign in page after finding out if the accoubnt locked or not 
-            Password=input("Enter space to go back\nEnter Password: ")# take the password
-            if Password==" ":#to go back
-                self.initial_Menu()#to go back
-            counter=0 #counter for how many wrong password have been passed
-            while Ut.Utility.Check_if_password_valid(Password)==False or self.Password_Checker(Username, Password)==False:# while password is not valid(contains from 8 to 16 and does not contain space) and the password is not correct will keep asking for the password again 
-                counter+=1# increase the invaild password counter 
-                Password=input("Enter space to go back\nPassword is not valid enter password again or not correct:\n ")# asks again for the password
-                if Password== " ":# to go back
-                    self.initial_Menu()# to go back
-                if counter ==2:# if counter == 2 means password have been passed wrong three times one at line 24 and two times in line 28
-                    for i in self.Accounts:# loop through the accounts
-                        if i["Username"]==Username:#finding the username of the account for i
-                            i["is_locked_out"]= True # locked out the account so the user can not  log in or transfer to the account.
-                            print("==========\nThe account Have been locked out. contact the bank please\n==========")# message for the user
-                            self.initial_Menu()#take it back to sign in menu
-                
-            
+#==================================================================================================
             for i in self.Accounts:
-                if i["Username"]==Username and i["Password"]==Password:# after looping through accounts finding if the username and password are for the same account
-                    self.App_main_interface(Username) #let the user ennter the app interface to do operations. always passed username as reference
+                if i["Username"] == Username:
+                    counter = i["Password_attempts"]
+                    Password = input("\nEnter space to go back\nIf password is incorrect after three attempts, the account will be locked out\nEnter Password: ")  # take the password
+        
+                    if Password == " ":  # to go back
+                        for i in self.Accounts:
+                            if i["Username"] == Username:
+                               i["Password_attempts"] = counter    
+                        self.initial_Menu()  # to go back
+
+                    while Ut.Utility.Check_if_password_valid(Password) == False or self.Password_Checker(Username, Password) == False:  # while password is invalid (not between 8-16 characters or incorrect)
+                        if counter == 1:  # If counter reaches 0 (third failed attempt)
+                            for i in self.Accounts:  # loop through the accounts
+                                if i["Username"] == Username:  # finding the username of the account
+                                    i["is_locked_out"] = True  # lock out the account
+                                    print("==========\nThe account has been locked out. Contact the bank please.\n==========")  # message for the user
+                                    return self.initial_Menu()  # take it back to the sign-in menu
+                        counter -= 1  # decrease the password attempts counter
+                        Password = input(f"\nEnter space to go back\nPassword is not valid, enter password again or incorrect:\n{counter} attempt\s left\n\n ")  # asks again for the password
+            
+                        if Password == " ":  # to go back
+                            for i in self.Accounts:
+                                if i["Username"] == Username:
+                                    i["Password_attempts"] = counter
+                            self.initial_Menu()  # to go back
+            
+            if counter == 0:  # If counter reaches 0 (third failed attempt)
+                for i in self.Accounts:  # loop through the accounts
+                    if i["Username"] == Username:  # finding the username of the account
+                        i["is_locked_out"] = True  # lock out the account
+                        print("==========\nThe account has been locked out. Contact the bank please.\n==========")  # message for the user
+                        return self.initial_Menu()  # take it back to the sign-in menu
+
+            self.App_main_interface(Username)  # let the user enter the app interface to perform operations, always passing Username as a reference
                     
             
             
@@ -121,7 +137,7 @@ class Banking_app:
 
 
     def add_New_accounts_to_data(self,Username,Password,money_deposited):# this function is to add a new account to the data
-        template={"Username": Username, "Password": Password,"Balance": "0","Overdraft_Allowance": 1500,"is_locked_out":False}# this is template to fill the data for the new account. this will be added to the accounts lists
+        template={"Username": Username, "Password": Password,"Balance": "0","Password_attempts":3,"Overdraft_Allowance": 1500,"is_locked_out":False}# this is template to fill the data for the new account. this will be added to the accounts lists
         balance=Ut.Utility.twos_complement_to_decimal(template["Balance"])# to convert the balance from binary to decimal
         new_balance=balance+money_deposited #after prompt the user to deposit money this line to add the deposited money to the balance
         finalbalance=Ut.Utility.dec_to_2complemnt(new_balance) # convert the final balance to binary
@@ -332,6 +348,14 @@ class Banking_app:
             if amount==" ":
                 self.App_main_interface(Username)
         amount=int(amount)# convert the string number to intger
+        
+        
+        for i in self.Accounts:
+            if i["Username"]==Username:
+                if Ut.Utility.is_balance_sufficient(i, amount)==False:
+                    print("Balance is not sufficient")
+                    self.App_main_interface(Username)
+        
         
         for rec in self.Accounts:# loop throgh accounts to find the receiver 
             if rec["Username"]==receiver:# check usernames are the same

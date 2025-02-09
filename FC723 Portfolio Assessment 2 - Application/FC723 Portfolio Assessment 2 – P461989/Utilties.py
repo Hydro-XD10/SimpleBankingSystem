@@ -2,7 +2,6 @@ class Utility:
     
     def is_balance_sufficient(account,amount_of_money):# function that checks if the user got enough balance
         balance=Utility.twos_complement_to_decimal(account["Balance"])#get the balance in decimal
-        
         if balance >= amount_of_money: # if balance greater that the amount of money wanted to withdrawl or transfer
             return True#return true which means enough money is in the account
         if balance < amount_of_money:# if there is less money in the balance than the amount wanted to withdrawl or transfer
@@ -44,7 +43,7 @@ class Utility:
             if i not in lis:# if the character is not in the list
                 return False# reuturn false because its means that it could be letters
     
-        return True# if nothing is passed as false it will be true which means valid float
+        return True# if nothing is passed as false it will be true which means valid int
     
         
     
@@ -73,7 +72,7 @@ class data:
             "Username": "Abdulmalik", #  unique username 
             "Password": "12345678",# normal password must be between 8 to 16 characters
             "Balance": "00000000000000000000010100010100",# balance in binary
-            
+            "Password_attempts":3,
             "Overdraft_Allowance": 1500,    
             "is_locked_out":False, # is the account locked out or not
             
@@ -81,8 +80,8 @@ class data:
         {
             "Username": "Sam112233",
             "Password": "123456789",
-            "Balance": "0",
-            
+            "Balance": "00000000000000000000000000000000",
+            "Password_attempts":3,
             "Overdraft_Allowance": 1500,
             "is_locked_out":False,# is the account locked out or not
                  
@@ -90,8 +89,8 @@ class data:
         {
             "Username": "mono133",
             "Password": "1q2w3e4r5t",
-            "Balance": "0",
-            
+            "Balance": "00000000000000000000000000000000",
+            "Password_attempts":3,
             "Overdraft_Allowance": 1500,
             "is_locked_out":False,# is the account locked out or not
             
@@ -99,6 +98,6 @@ class data:
         ]
     
 
-a=Utility.dec_to_2complemnt(1300)
+a=Utility.dec_to_2complemnt(0)
 print(a)
 
