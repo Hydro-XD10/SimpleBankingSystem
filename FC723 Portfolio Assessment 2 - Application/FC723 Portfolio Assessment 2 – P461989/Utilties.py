@@ -98,6 +98,4 @@ class data:
         ]
     
 
-a=Utility.dec_to_2complemnt(0)
-print(a)
 

@@ -60,7 +60,8 @@ class Banking_app:
                         i["is_locked_out"] = True  # lock out the account
                         print("==========\nThe account has been locked out. Contact the bank please.\n==========")  # message for the user
                         return self.initial_Menu()  # take it back to the sign-in menu
-
+            
+            i["Password_attempts"]==3# if user pass the correct the password the aattempts will back to 3
             self.App_main_interface(Username)  # let the user enter the app interface to perform operations, always passing Username as a reference
                     
             
@@ -106,6 +107,10 @@ class Banking_app:
     def App_main_interface(self,Username):# this is the app interface that has withdrawl,transfer, deposit, display balance, exit app and log out
         #this is to take the service number vvvv
         option=input("Please Enter the service number\n1-Withdrawl\n===========\n2-Deposit\n===========\n3-Display Balance\n===========\n4-Transfer money\n===========\n5-Exit App\n===========\n6-Log out\n")
+        num_Services=["1","2","3","4","5","6"]
+        while option not in num_Services :
+            option=input("Please Enter the service number\n1-Withdrawl\n===========\n2-Deposit\n===========\n3-Display Balance\n===========\n4-Transfer money\n===========\n5-Exit App\n===========\n6-Log out\n")
+        
         if option == "5":# exit app
             return
         if option =="6":
@@ -213,10 +218,10 @@ class Banking_app:
                 newbalance=Ut.Utility.dec_to_2complemnt(final_amount)
                 account["Balance"]=newbalance
 
-                #print(account)
+                print(f"{depositamount} GBP is deposited successfully")
                 self.App_main_interface(Username)# run the interface again
                 
-                
+
 #/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\    End of The Deposit function code    /-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\
 
 
